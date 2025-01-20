@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cute questionnaire</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+        
+        body {
+            font-family: 'Indie Flower', cursive;
+            background-color: #f0f8ff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('hearts.gif');
+            background-size: cover;
+        }
+        .hidden {
+            display: none;
+        }
+        .spin {
+            animation: spin 2s linear;
+        }
+        @keyframes spin {
+            from {transform: rotate(0deg);}
+            to {transform: rotate(360deg);}
+        }
+        .fly-away {
+            animation: flyAway 2s forwards;
+        }
+        @keyframes flyAway {
+            0% {transform: translateY(0);}
+            100% {transform: translateY(-1000px);}
+        }
+        .jiggle {
+            animation: jiggle 2s infinite;
+        }
+        @keyframes jiggle {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        button {
+            font-size: 20px;
+            padding: 15px 30px;
+            background-color: #add8e6; /* nice blue */
+            border: none;
+            border-radius: 10px;
+            color: #ff69b4; /* cute pink */
+            cursor: pointer;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        img {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+        @keyframes poof {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(2); }
+        }
+        .poof {
+            animation: poof 1s forwards;
+        }
+        .button-image {
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            border: none;
+            cursor: pointer;
+        }
+        #standcat {
+            width: 150px; /* Adjust the size as needed */
+            height: auto;
+            position: absolute;
+            top: 470px; /* Further adjusted position to be between the button and the speech box arrow */
+            left: 45%; /* Moved slightly to the left */
+            transform: translateX(-50%);
+        }
+        #messageBox {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 20px;
+            color: #ff69b4; /* cute pink */
+            position: absolute;
+            top: 350px; /* Adjusted position */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        @keyframes appear {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .appear {
+            animation: appear 1s forwards;
+        }
+        .speech-bubble {
+            position: absolute;
+            background: #ff69b4; /* cute pink */
+            border-radius: .4em;
+            padding: 10px;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+            top: -70px; /* Adjust the position to be higher */
+            left: 50%;
+            transform: translateX(-50%);
+            border: 2px solid #ff1493; /* nice pink outline */
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px;
+            border-style: solid;
+            border-color: #ff69b4 transparent transparent transparent;
+        }
+        #nextButton {
+            background-color: #add8e6;
+            color: #ff69b4;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .new-speech-bubble {
+            position: absolute;
+            background: #ff69b4; /* cute pink */
+            border-radius: .4em;
+            padding: 10px;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+            top: 100px; /* Adjust the position as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            display: none; /* Initially hidden */
+            border: 2px solid #1e90ff; /* nice blue outline */
+        }
+        .new-speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px;
+            border-style: solid;
+            border-color: #ff69b4 transparent transparent transparent;
+        }
+        #babykitty {
+            width: 150px; /* Adjust the size as needed */
+            height: auto;
+            position: absolute;
+            top: 300px; /* Moved down a bit more */
+            left: 50%;
+            transform: translateX(-50%);
+            display: none; /* Initially hidden */
+        }
+        #questionButton1 {
+            background-color: #add8e6;
+            color: #ff69b4;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 500px; /* Moved even lower */
+            left: 50%;
+            transform: translateX(-50%);
+            display: none; /* Initially hidden */
+        }
+        #questionTextBox {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 20px;
+            color: #ff69b4; /* cute pink */
+            position: absolute;
+            top: 550px; /* Adjusted position */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            display: none; /* Initially hidden */
+        }
+        @keyframes magicAppear {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes flyIn {
+            0% { opacity: 0; transform: translateX(-100%); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        #answerButton1, #answerButton2, #answerButton3 {
+            background-color: #add8e6;
+            color: #ff69b4;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 650px; /* Lowered position */
+            display: none; /* Initially hidden */
+            animation: flyIn 1s forwards;
+        }
+        #answerButton1 {
+            left: 25%; /* Position to the left */
+        }
+        #answerButton2 {
+            left: 45%; /* Moved to the left a bit */
+            transform: translateX(-50%);
+        }
+        #answerButton3 {
+            left: 65%; /* Moved to the left a bit */
+        }
+        #answerButton4, #answerButton5, #answerButton6 {
+            background-color: #add8e6;
+            color: #ff69b4;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 650px; /* Lowered position */
+            display: none; /* Initially hidden */
+            animation: flyIn 1s forwards;
+        }
+        #answerButton4 {
+            left: 25%; /* Position to the left */
+        }
+        #answerButton5 {
+            left: 45%; /* Moved to the left a bit */
+            transform: translateX(-50%);
+        }
+        #answerButton6 {
+            left: 65%; /* Moved to the left a bit */
+        }
+        #answerButton7, #answerButton8, #answerButton9 {
+            background-color: #add8e6;
+            color: #ff69b4;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 650px; /* Lowered position */
+            display: none; /* Initially hidden */
+            animation: flyIn 1s forwards;
+        }
+        #answerButton7 {
+            left: 25%; /* Position to the left */
+        }
+        #answerButton8 {
+            left: 45%; /* Moved to the left a bit */
+            transform: translateX(-50%);
+        }
+        #answerButton9 {
+            left: 65%; /* Moved to the left a bit */
+        }
+        #goodJobBox {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 30px; /* Increased padding */
+            font-size: 24px; /* Increased font size */
+            color: #ff69b4; /* cute pink */
+            position: absolute;
+            top: 450px; /* Raised position */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%; /* Increased width */
+            max-width: 700px; /* Increased max-width */
+            text-align: center;
+            display: none; /* Initially hidden */
+        }
+        #continueButton {
+            background-color: #add8e6;
+            color: #ff69b4;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 650px; /* Lowered position */
+            left: 50%;
+            transform: translateX(-50%);
+            display: none; /* Initially hidden */
+        }
+        #questionTextBox2 {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 30px; /* Increased padding */
+            font-size: 24px; /* Increased font size */
+            color: #ff69b4; /* cute pink */
+            position: absolute;
+            top: 450px; /* Raised position */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%; /* Increased width */
+            max-width: 700px; /* Increased max-width */
+            text-align: center;
+            display: none; /* Initially hidden */
+        }
+        #continueToQuestion3Button {
+            background-color: #add8e6;
+            color: #ff69b4;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 650px; /* Lowered position */
+            left: 40%; /* Moved to the left */
+            transform: translateX(-50%);
+            display: none; /* Initially hidden */
+            animation: flyIn 1s forwards;
+        }
+        #questionTextBox3 {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 20px;
+            color: #ff69b4; /* cute pink */
+            position: absolute;
+            top: 550px; /* Adjusted position */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            display: none; /* Initially hidden */
+        }
+        #finalMessageBox {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 30px; /* Increased padding */
+            font-size: 24px; /* Increased font size */
+            color: #ff69b4; /* cute pink */
+            position: absolute;
+            top: 450px; /* Raised position */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%; /* Increased width */
+            max-width: 700px; /* Increased max-width */
+            text-align: center;
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+    <audio id="backgroundMusic" loop>
+        <source src="Mac Miller - Congratulations feat. Bilal (No Intro).mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <button id="startButton">i care about you so so so so much that i made you a little something</button>
+    <img id="fartstyy" src="fartstyy.jpg" class="hidden" alt="fartstyy">
+
+    <script>
+    document.getElementById('startButton').addEventListener('click', function() {
+        const startButton = document.getElementById('startButton');
+        const fartstyy = document.getElementById('fartstyy');
+        const questionButton = document.getElementById('questionButton');
+        
+        startButton.classList.add('poof');
+        setTimeout(() => {
+            startButton.style.display = 'none';
+            fartstyy.classList.remove('hidden');
+            fartstyy.classList.add('spin');
+            setTimeout(() => {
+                fartstyy.classList.add('fly-away');
+                setTimeout(() => {
+                    fartstyy.classList.add('hidden');
+                    questionButton.classList.remove('hidden');
+                }, 2000); // Wait for the fly-away animation to complete
+            }, 2000); // Wait for the spin animation to complete
+        }, 1000); // Wait for the poof animation to complete
+    });
+
+    // Play background music after user interaction
+    document.getElementById('startButton').addEventListener('click', function() {
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        backgroundMusic.play();
+    });
+    </script>
+    <button id="questionButton" class="hidden button-image" style="background-image: url('sandwichcat1.gif');">click me</button>
+    <button id="muteButton" style="position: absolute; bottom: 20px; left: 20px; background-color: #add8e6; color: #ff69b4; border: none; border-radius: 10px; padding: 10px; cursor: pointer;">mute</button>
+
+    <script>
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const muteButton = document.getElementById('muteButton');
+    let isMuted = false;
+
+    muteButton.addEventListener('click', function() {
+        if (isMuted) {
+            backgroundMusic.play();
+            muteButton.textContent = 'mute';
+        } else {
+            backgroundMusic.pause();
+            muteButton.textContent = 'unmute';
+        }
+        isMuted = !isMuted;
+    });
+    </script>
+    <script>
+    document.getElementById('questionButton').addEventListener('click', function() {
+        const questionButton = document.getElementById('questionButton');
+        document.body.style.backgroundImage = "url('cutecat1.gif')";
+        questionButton.classList.add('poof');
+        setTimeout(() => {
+            questionButton.style.display = 'none';
+        }, 1000); // Wait for the poof animation to complete
+    });
+    </script>
+    <div id="messageBox" class="hidden speech-bubble">i know this year started pretty shitty for you but i want you to know i will always be here to give you love and any help i can!</div>
+    <img id="standcat" src="standcat.gif" class="hidden" alt="standcat">
+    <button id="nextButton" class="hidden">continue</button>
+    <div id="newMessageBox" class="new-speech-bubble">however, i want to be confident that you are the right person for me, so i made a little test for you. good luck!</div>
+    <img id="babykitty" src="babykitty.gif" alt="babykitty">
+    <button id="questionButton1" class="hidden">go to question 1</button>
+    <div id="questionTextBox" class="hidden">what is my favourite hobby out of all the ones i have?</div>
+    <button id="answerButton1" class="hidden">sports</button>
+    <button id="answerButton2" class="hidden">music</button>
+    <button id="answerButton3" class="hidden">gaming</button>
+    <div id="goodJobBox" class="hidden">this one was kind of a no brainer lmao</div>
+    <button id="continueButton" class="hidden">continue to question 2 (pretty tough)</button>
+    <div id="questionTextBox2" class="hidden">what do you think my dream date is with you?</div>
+    <button id="answerButton4" class="hidden">movie marathon</button>
+    <button id="answerButton5" class="hidden">going out to dinner</button>
+    <button id="answerButton6" class="hidden">stargazing</button>
+    <div id="finalMessageBox" class="hidden">you couldn't possibly get that one wrong (any date with you is my preferred date)</div>
+    <button id="continueToQuestion3Button" class="hidden">continue to question 3</button>
+    <div id="questionTextBox3" class="hidden">what is my favourite song? (of all time)</div>
+    <audio id="incorrectSound">
+        <source src="Loud Incorrect Buzzer Lie  MemeSound Effect.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <audio id="correctSound">
+        <source src="LOUD CORRECT BUZZER.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+    document.getElementById('questionButton').addEventListener('click', function() {
+        const questionButton = document.getElementById('questionButton');
+        const standcat = document.getElementById('standcat');
+        const messageBox = document.getElementById('messageBox');
+        const nextButton = document.getElementById('nextButton');
+        
+        document.body.style.backgroundImage = "url('cutecat1.gif')";
+        questionButton.classList.add('poof');
+        setTimeout(() => {
+            questionButton.style.display = 'none';
+            standcat.classList.remove('hidden');
+            standcat.classList.add('appear');
+            messageBox.classList.remove('hidden');
+            nextButton.classList.remove('hidden');
+        }, 1000); // Wait for the poof animation to complete
+    });
+    </script>
+    <script>
+    document.getElementById('nextButton').addEventListener('click', function() {
+        document.body.style.backgroundImage = "url('cat-smiling-cat.gif')";
+        document.getElementById('messageBox').style.display = 'none';
+        document.getElementById('nextButton').style.display = 'none';
+        document.getElementById('standcat').style.display = 'none'; // Make standcat disappear
+        document.getElementById('newMessageBox').style.display = 'block'; // Show new speech box
+        document.getElementById('babykitty').style.display = 'block'; // Show babykitty
+        setTimeout(() => {
+            document.getElementById('questionButton1').style.display = 'block'; // Show "go to questions 1" button
+        }, 2000); // Wait for 2 seconds before showing the button
+    });
+
+    document.getElementById('questionButton1').addEventListener('click', function() {
+        document.body.style.backgroundImage = "url('sillykitty.gif')";
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        backgroundMusic.src = "beabadoobee - the perfect pair (Official Audio).mp3";
+        backgroundMusic.play();
+        document.getElementById('questionTextBox').style.display = 'block'; // Show the question text box
+        document.getElementById('newMessageBox').style.display = 'none'; // Hide the second speech box
+        document.getElementById('questionButton1').style.display = 'none'; // Hide the "go to question 1" button
+        document.getElementById('babykitty').style.display = 'none'; // Hide babykitty
+        
+        setTimeout(() => {
+            document.getElementById('answerButton1').style.display = 'block'; // Show first answer button
+            setTimeout(() => {
+                document.getElementById('answerButton2').style.display = 'block'; // Show second answer button
+                setTimeout(() => {
+                    document.getElementById('answerButton3').style.display = 'block'; // Show third answer button
+                }, 3000); // Wait for 3 seconds before showing the third button
+            }, 3000); // Wait for 3 seconds before showing the second button
+        }, 3000); // Wait for 3 seconds before showing the first button
+    });
+
+    document.getElementById('answerButton1').addEventListener('click', function() {
+        document.getElementById('incorrectSound').play(); // Play incorrect sound
+    });
+
+    document.getElementById('answerButton2').addEventListener('click', function() {
+        document.getElementById('incorrectSound').play(); // Play incorrect sound
+    });
+
+    document.getElementById('answerButton3').addEventListener('click', function() {
+        document.getElementById('correctSound').play(); // Play correct sound
+        document.getElementById('questionTextBox').style.display = 'none'; // Hide question text box
+        document.getElementById('answerButton1').style.display = 'none'; // Hide answer button 1
+        document.getElementById('answerButton2').style.display = 'none'; // Hide answer button 2
+        document.getElementById('answerButton3').style.display = 'none'; // Hide answer button 3
+        document.getElementById('goodJobBox').style.display = 'block'; // Show good job box
+        document.getElementById('continueButton').style.display = 'block'; // Show continue button
+    });
+
+    document.getElementById('continueButton').addEventListener('click', function() {
+        document.body.style.backgroundImage = "url('sleepycat.gif')";
+        document.getElementById('goodJobBox').style.display = 'none'; // Hide good job box
+        document.getElementById('continueButton').style.display = 'none'; // Hide continue button
+        document.getElementById('questionTextBox2').style.display = 'block'; // Show new question text box
+        
+        setTimeout(() => {
+            document.getElementById('answerButton4').style.display = 'block'; // Show first answer button
+            setTimeout(() => {
+                document.getElementById('answerButton5').style.display = 'block'; // Show second answer button
+                setTimeout(() => {
+                    document.getElementById('answerButton6').style.display = 'block'; // Show third answer button
+                }, 3000); // Wait for 3 seconds before showing the third button
+            }, 3000); // Wait for 3 seconds before showing the second button
+        }, 2000); // Wait for 2 seconds before showing the first button
+    });
+
+    document.getElementById('answerButton4').addEventListener('click', function() {
+        document.getElementById('correctSound').play(); // Play correct sound
+        document.getElementById('questionTextBox2').style.display = 'none'; // Hide question text box
+        document.getElementById('answerButton4').style.display = 'none'; // Hide answer button 1
+        document.getElementById('answerButton5').style.display = 'none'; // Hide answer button 2
+        document.getElementById('answerButton6').style.display = 'none'; // Hide answer button 3
+        document.getElementById('finalMessageBox').style.display = 'block'; // Show final message box
+        document.getElementById('continueToQuestion3Button').style.display = 'block'; // Show continue to question 3 button
+    });
+
+    document.getElementById('answerButton5').addEventListener('click', function() {
+        document.getElementById('correctSound').play(); // Play correct sound
+        document.getElementById('questionTextBox2').style.display = 'none'; // Hide question text box
+        document.getElementById('answerButton4').style.display = 'none'; // Hide answer button 1
+        document.getElementById('answerButton5').style.display = 'none'; // Hide answer button 2
+        document.getElementById('answerButton6').style.display = 'none'; // Hide answer button 3
+        document.getElementById('finalMessageBox').style.display = 'block'; // Show final message box
+        document.getElementById('continueToQuestion3Button').style.display = 'block'; // Show continue to question 3 button
+    });
+
+    document.getElementById('answerButton6').addEventListener('click', function() {
+        document.getElementById('correctSound').play(); // Play correct sound
+        document.getElementById('questionTextBox2').style.display = 'none'; // Hide question text box
+        document.getElementById('answerButton4').style.display = 'none'; // Hide answer button 1
+        document.getElementById('answerButton5').style.display = 'none'; // Hide answer button 2
+        document.getElementById('answerButton6').style.display = 'none'; // Hide answer button 3
+        document.getElementById('finalMessageBox').style.display = 'block'; // Show final message box
+        document.getElementById('continueToQuestion3Button').style.display = 'block'; // Show continue to question 3 button
+    });
+
+    document.getElementById('continueToQuestion3Button').addEventListener('click', function() {
+        document.body.style.backgroundImage = "url('twinkitttys.gif')";
+        document.getElementById('finalMessageBox').style.display = 'none'; // Hide final message box
+        document.getElementById('continueToQuestion3Button').style.display = 'none'; // Hide continue to question 3 button
+        document.getElementById('questionTextBox3').style.display = 'block'; // Show new question text box
+    });
+    </script>
+</body>
+</html>
